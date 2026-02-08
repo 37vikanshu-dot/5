@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Banshuu 🤍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#fff7f9;
+  --card:#ffe3ea;
+  --text:#402026;
+  --rose:#ff8fab;
+  --night-bg:#0f0f14;
+  --night-text:#f5e9ec;
+}
+
+html,body{
+  margin:0;
+  height:100%;
+  font-family:"Poppins", Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+  transition:0.6s;
+}
+
+body.night{
+  background:var(--night-bg);
+  color:var(--night-text);
+}
+
+/* Screens */
+.screen{
+  position:fixed;
+  inset:0;
+  display:none;
+  padding:60px 22px 140px;
+  text-align:center;
+  overflow-y:auto;
+}
+.screen.active{display:block}
+
+/* Buttons */
+.next, .choice{
+  padding:14px 36px;
+  border:none;
+  border-radius:40px;
+  background:var(--rose);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin:10px;
+  box-shadow:0 10px 25px rgba(255,143,171,.4);
+}
+
+.choice.no{
+  background:#ccc;
+  color:#333;
+}
+
+/* Night toggle */
+.toggle{
+  position:fixed;
+  top:18px;
+  right:18px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+/* Animations */
+.fade{
+  opacity:0;
+  animation:fadeIn 2.2s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+
+img,video{
+  width:75%;
+  max-width:300px;
+  border-radius:18px;
+  margin:22px auto;
+  display:block;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+
+/* Heart burst */
+.heart{
+  position:fixed;
+  font-size:24px;
+  animation:float 2s ease-out forwards;
+}
+@keyframes float{
+  to{
+    transform:translateY(-120px) scale(1.6);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Night mode toggle -->
+<div class="toggle" onclick="toggleNight()">🌙</div>
+
+<!-- Music -->
+<audio id="bg" src="bg.mp3" loop></audio>
+
+<!-- SCREENS -->
+
+<div class="screen active" id="s0">
+  <h2 class="fade">Hi Banshuu 🤍</h2>
+  <p class="fade" style="animation-delay:1s">
+    Aaj koi pressure nahi…<br>
+    bas thoda sa pyaar.
+  </p>
+  <button class="next" onclick="start()">Start</button>
+</div>
+
+<div class="screen" id="s1">
+  <p class="fade">
+    Sach dassan…<br>
+    meri zindagi thodi incomplete lagdi ae<br>
+    jadon tuc naal nahi hundi 🤍
+  </p>
+  <button class="next" onclick="next()">Next</button>
+</div>
+
+<div class="screen" id="s2">
+  <img src="photo1.jpg">
+  <p class="fade">
+    Thode naal har chhoti gall v<br>
+    thodi special ban jaandi ae 🌸
+    thode toh baad meri life bhut vdia hogyi ji 
+  </p>
+  <button class="next" onclick="next()">Next</button>
+</div>
+
+<div class="screen" id="s3">
+  <img src="photo2.jpg">
+  <p class="fade">
+    Na vaade… na kasam…<br>
+    bas ik feeling 🤍 thonu dekhn toh baad ta sbb bhul jna mai ji 
+  </p>
+  <button class="next" onclick="next()">Next</button>
+</div>
+
+<div class="screen" id="s4">
+  <img src="photo3.jpg">
+  <p class="fade">
+    Tuc meri life ch sirf ek moment nahi…<br>
+    tuc meri aadat ban chuki ae 💗
+  </p>
+  <button class="next" onclick="next()">Next</button>
+</div>
+
+<!-- FUN GAME -->
+<div class="screen" id="s5">
+  <p class="fade">
+    Ek simple sawaal…<br>
+    bina overthink kiye 😊
+  </p>
+
+  <button class="choice" onclick="yes()">YES 🤍</button>
+  <button class="choice no" id="noBtn" onclick="moveNo()">NO 🙈</button>
+</div>
+
+<!-- FINAL -->
+<div class="screen" id="s6">
+  <h2 class="fade">💖</h2>
+  <p class="fade" style="animation-delay:1s">
+    Happiest Propose Day <br>
+    <b>my bugge ji</b> 🤍<br><br>
+    my life,<br>
+    my everything.
+  </p>
+  <p class="fade" style="animation-delay:2.5s">
+    — Vikanshu
+  </p>
+</div>
+
+<script>
+let i=0;
+
+/* Start */
+function start(){
+  document.getElementById("bg").volume=0.4;
+  document.getElementById("bg").play();
+  next();
+}
+
+/* Next screen */
+function next(){
+  document.getElementById("s"+i).classList.remove("active");
+  i++;
+  document.getElementById("s"+i).classList.add("active");
+}
+
+/* Night mode */
+function toggleNight(){
+  document.body.classList.toggle("night");
+}
+
+/* NO button moves */
+function moveNo(){
+  const btn=document.getElementById("noBtn");
+  btn.style.position="absolute";
+  btn.style.left=Math.random()*70+"%";
+  btn.style.top=Math.random()*60+"%";
+}
+
+/* YES action */
+function yes(){
+  for(let j=0;j<15;j++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="💖";
+    h.style.left=(50+Math.random()*20-10)+"%";
+    h.style.top="70%";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),2000);
+  }
+  setTimeout(next,600);
+}
+</script>
+
+</body>
+</html>
